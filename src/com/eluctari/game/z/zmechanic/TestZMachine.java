@@ -16,14 +16,14 @@ public class TestZMachine {
 	@Test public void testBitOps1() {
 		byte[] data = new byte[] { (byte)0x80, 0x00 };
 		for (int i = 0; i < 16; i++) {
-			assertEquals(i == 7, ZMachine.getBit(data, i));
+			assertEquals(i == 15, ZMachine.getBit(data, i));
 		}
 	}
 	
 	@Test public void testBitOps2() {
 		byte[] data = new byte[] { (byte)0xff, (byte)0xfd };
 		for (int i = 0; i < 16; i++) {
-			assertEquals( i != 9, ZMachine.getBit(data, i));
+			assertEquals( i != 1, ZMachine.getBit(data, i));
 		}
 	}
 	
