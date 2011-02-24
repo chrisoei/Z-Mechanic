@@ -8,7 +8,7 @@ import java.util.*;
  * @author Christopher Oei http://www.linkedin.com/in/eluctari
  *
  */
-public class Section extends ZElement {
+public class Section extends ParseElement {
 	static Map<String,SectionType> sectionMap = new HashMap();
 
 	SectionType sectionType;

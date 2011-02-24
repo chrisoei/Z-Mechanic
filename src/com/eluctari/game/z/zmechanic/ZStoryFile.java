@@ -11,8 +11,7 @@ public class ZStoryFile {
 	private static int KILOBYTE = 1024;
 	private int releaseNumber;
 	private int serialCode;
-	private long routineOffset = 0;
-	private long stringOffset = 0;
+
 	
 	public long getMaximumPermittedSize() {
 		switch (ZMachine.INSTANCE.getVersion()) {
@@ -33,11 +32,4 @@ public class ZStoryFile {
 		}
 	}
 	
-	public long getRoutineOffset() {
-		return routineOffset;
-	}
-	
-	public long getStringOffset() {
-		return stringOffset;
-	}
 }

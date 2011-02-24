@@ -10,7 +10,7 @@ package com.eluctari.game.z.zmechanic;
 
 import java.util.*;
 
-public class Label extends ZElement {
+public class Label extends ParseElement {
 	
 	static enum labelMap {
 		INSTANCE;		

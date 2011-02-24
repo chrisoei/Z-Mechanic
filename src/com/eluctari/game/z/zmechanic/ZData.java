@@ -8,7 +8,7 @@ package com.eluctari.game.z.zmechanic;
  * @author Christopher Oei http://www.linkedin.com/in/eluctari
  *
  */
-public class ZData extends ZElement {
+public class ZData extends ParseElement {
 	byte[] data;
 	
 	public ZData(ZToken t) {

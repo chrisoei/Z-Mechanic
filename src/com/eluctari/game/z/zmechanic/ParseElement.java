@@ -8,14 +8,14 @@ package com.eluctari.game.z.zmechanic;
  * @author Christopher Oei http://www.linkedin.com/in/eluctari
  *
  */
-public class ZElement {
+public class ParseElement {
 	int byteSize;
 	
-	public ZElement() {
+	public ParseElement() {
 		
 	}
 	
-	public ZElement(int n) {
+	public ParseElement(int n) {
 		byteSize = n;
 	}
 	

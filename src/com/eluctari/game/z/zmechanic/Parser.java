@@ -11,7 +11,7 @@ import java.util.*;
  */
 public class Parser {
 	Lexer lexer;
-	List<ZElement> syntaxTree;
+	List<ParseElement> syntaxTree;
 	int position;
 	
 	public Parser(Lexer lex) {
@@ -20,7 +20,7 @@ public class Parser {
 	}
 	
 	public void parse() {
-		syntaxTree = new LinkedList<ZElement>();
+		syntaxTree = new LinkedList<ParseElement>();
 		position = 0;
 		while(lexer.hasNext()) {
 			ZToken tok = lexer.next();
@@ -35,7 +35,17 @@ public class Parser {
 				} else if (s.startsWith("::")) {
 					syntaxTree.add(new Section(tok));
 				} else if (s.startsWith("@")) {
-					throw new UnsupportedOperationException("No @ commands implemented yet.");
+					List<ZToken> args = new LinkedList<ZToken>();
+					for (ZToken arg = lexer.next(); arg.getZTokenType() != ZTokenType.EOLN ;) {
+						args.add(arg);
+					}
+					Instruction i = new Instruction(Instruction.Form.LONGFORM, args.size());
+					int n = 0;
+					for (ZToken t2 : args) {
+//						Operand o = new Operand();
+//						i.setOperand(n++, o);
+					}
+					syntaxTree.add(i);
 				} else if (s.equals(".byte")) {
 					ZData d = new ZData(tok);
 					d.setData(0, lexer.next().getByteValue());
