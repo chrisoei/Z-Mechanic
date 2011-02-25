@@ -43,6 +43,16 @@ public class ZStoryFile {
 		}
 	}
 	
+	public void putBit(int bytePosition, int bitPosition, boolean val) {
+		int bitMask = 1 << (bitPosition % 8);
+		maxByte = ((bytePosition > maxByte) ? bytePosition : maxByte);
+		if (val) {
+			bytes[bytePosition] |= bitMask;
+		} else {
+			bytes[bytePosition] &= ~bitMask;
+		}
+	}
+	
 	public void setReleaseNumber(short x) {
 		putWord(0x02, x);
 	}
@@ -52,6 +62,40 @@ public class ZStoryFile {
 			throw new IllegalArgumentException("Serial code has incorrect length " + x.length());
 		}
 		putString(0x12, x);
+	}
+	
+	// See specs page 61.
+	public void setBaseOfHighMemory(Address x) {
+		putWord(0x04, x.getByteAddress());
+	}
+	
+	// See specs page 61.
+	public void setInitialValueOfProgramCounter(Address x) {
+		putWord(0x06, x.getByteAddress());
+	}
+	
+	public void setDictionaryLocation(Address x) {
+		putWord(0x08, x.getByteAddress());
+	}
+	
+	public void setObjectTableLocation(Address x) {
+		putWord(0x0a, x.getByteAddress());
+	}
+	
+	public void setGlobalVariablesTable(Address x) {
+		putWord(0x0c, x.getByteAddress());
+	}
+	
+	public void setBaseOfStaticMemory(Address x) {
+		putWord(0x0e, x.getByteAddress());
+	}
+	
+	public void setAbbreviationsTable(Address x) {
+		putWord(0x18, x.getByteAddress());
+	}
+	
+	public void setFileLength() {
+		putWord(0x1a, (maxByte > 0x1b) ? (short)maxByte : 0x1b);
 	}
 	
 	public void write(File f) throws IOException {
