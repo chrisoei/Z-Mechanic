@@ -21,51 +21,19 @@ public class Opcode {
 	int flagnn; // See p77
 	int instructionNumber;
 	
-	public enum OperandType {
-		OT_0OP("0OP"), // these opcodes take 0 operands
-		OT_1OP("1OP"), // these opcodes take 1 operand
-		OT_2OP("2OP"), // these opcodes take 2 operands
-		OT_VAR("VAR"), // these opcodes take a variable number of operands
-		OT_EXT("EXT"); // these are extended opcodes
-
-		private String representation;
-		private static Map<String, OperandType> operandTypeMap;
-		
-		static {
-			operandTypeMap = new HashMap<String, OperandType>();
-			for (OperandType ot : OperandType.values()) {
-				operandTypeMap.put(ot.representation, ot);
-			}
-		}
-
-		public static OperandType get(String s) {
-			if (!operandTypeMap.containsKey(s)) {
-				throw new IllegalArgumentException("No such operand type: " + s);
-			}
-			return operandTypeMap.get(s);
-		}
-		
-		private OperandType(String s) {
-			representation = s;
-		}
-		
-		public String toString() {
-			return representation;
-		}
-	}
 	
-	private OperandType operandType;
+	private Instruction.OperandCount operandCount;
 	private String name;
 	
-	public Opcode(OperandType ot, String o, int c) {
-		operandType = ot;
+	public Opcode(Instruction.OperandCount oc, String o, int c) {
+		operandCount = oc;
 		name = o;
 		bytes = new byte[1];
 		bytes[0] = (byte) c;
 	}
 	
-	public Opcode(OperandType ot, String o, int c1, int c2) {
-		operandType = ot;
+	public Opcode(Instruction.OperandCount oc, String o, int c1, int c2) {
+		operandCount = oc;
 		name = o;
 		bytes = new byte[2];
 		bytes[0] = (byte) c1;
@@ -77,7 +45,7 @@ public class Opcode {
 	}
 	
 	public String toString() {
-		String s = operandType.toString() + ":" +
+		String s = operandCount.toString() + ":" +
 			instructionNumber +
 			(branch ? "B" : "") +
 			(store ? "S" : "") +

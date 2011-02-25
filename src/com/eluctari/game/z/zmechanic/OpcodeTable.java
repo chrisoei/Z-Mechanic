@@ -16,26 +16,26 @@ public enum OpcodeTable {
 	
 	private int nOpcodes; // total # of opcodes
 	
-	private Map<Opcode.OperandType,Map<String,Opcode>> table;
+	private Map<Instruction.OperandCount,Map<String,Opcode>> table;
 	
 	private void addEntry(boolean st, boolean br, String op, Integer code, String description) {
 		String[] z = op.split(":");
 		if (z.length != 2) {
 			throw new IllegalArgumentException("Bad length: " + z.length);
 		}
-		Opcode.OperandType ot = Opcode.OperandType.get(z[0]);
+		Instruction.OperandCount oc = Instruction.OperandCount.get(z[0]);
 		int c = Integer.parseInt(z[1]);
 		if ( (c < 0) || (c > 255)) {
 			throw new IllegalArgumentException("Bad byte code: " + c);
 		}
 		String name = new StringTokenizer(description).nextToken();
 		Opcode opcode;
-		if (ot == Opcode.OperandType.OT_EXT) {
-			opcode = new Opcode(ot, name, 190, c); // See p75
+		if (oc == Instruction.OperandCount.OC_EXT) {
+			opcode = new Opcode(oc, name, 190, c); // See p75
 		} else {
-			opcode = new Opcode(ot, name, c);
+			opcode = new Opcode(oc, name, c);
 		}
-		table.get(ot).put(name, opcode);
+		table.get(oc).put(name, opcode);
 		nOpcodes++;
 	}
 	
@@ -43,14 +43,14 @@ public enum OpcodeTable {
 		
 	}
 	
-	public Opcode get(Opcode.OperandType ot, String s) {
-		return table.get(ot).get(s);
+	public Opcode get(Instruction.OperandCount oc, String s) {
+		return table.get(oc).get(s);
 	}
 	
 	public void initialize() {
 		nOpcodes = 0;
-		table = new HashMap<Opcode.OperandType, Map<String,Opcode>>();
-		for (Opcode.OperandType ot : Opcode.OperandType.values()) {
+		table = new HashMap<Instruction.OperandCount, Map<String,Opcode>>();
+		for (Instruction.OperandCount ot : Instruction.OperandCount.values()) {
 			table.put(ot, new HashMap<String,Opcode>());
 		}
 		generate0OP();

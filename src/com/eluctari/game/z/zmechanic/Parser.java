@@ -39,13 +39,24 @@ public class Parser {
 					for (ZToken arg = lexer.next(); arg.getZTokenType() != ZTokenType.EOLN ;) {
 						args.add(arg);
 					}
-					Instruction i = new Instruction(Instruction.Form.LONGFORM, args.size());
+					Instruction.Factory.INSTANCE.setForm(Instruction.Form.F_LONG);
+					switch(args.size()) {
+					case 0:
+						Instruction.Factory.INSTANCE.setOperandCount(Instruction.OperandCount.OC_0OP);
+						break;
+					case 1:
+						Instruction.Factory.INSTANCE.setOperandCount(Instruction.OperandCount.OC_1OP);
+						break;
+					case 2:
+						Instruction.Factory.INSTANCE.setOperandCount(Instruction.OperandCount.OC_2OP);
+						break;
+					}
 					int n = 0;
 					for (ZToken t2 : args) {
-//						Operand o = new Operand();
-//						i.setOperand(n++, o);
+						Operand o = new Operand(t2);
+						Instruction.Factory.INSTANCE.setOperand(n++, o);
 					}
-					syntaxTree.add(i);
+					syntaxTree.add(Instruction.Factory.INSTANCE.newInstance());
 				} else if (s.equals(".byte")) {
 					ZData d = new ZData(tok);
 					d.setData(0, lexer.next().getByteValue());

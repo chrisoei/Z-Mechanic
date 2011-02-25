@@ -15,21 +15,10 @@ public class Operand {
 	 *
 	 */
 	public enum OperandType {
-		LARGE_CONSTANT(0, 0, 2, "Large constant"),
-		SMALL_CONSTANT(0, 1, 1, "Small constant"),
-		VARIABLE(1, 0, 1, "Variable"),
-		OMITTED(1, 1, 0, "Omitted altogether");
 
-		String description;
-		int nBytes;
-		
-		private OperandType(int msb, int lsb, int bytes, String s) {
-			nBytes = bytes;
-			description = s;
-		}
 	}
 	
-	public Operand(int msb, int lsb) {
+	public Operand(ZToken t) {
 		
 	}
 }

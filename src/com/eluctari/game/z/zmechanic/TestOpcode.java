@@ -15,28 +15,28 @@ import org.junit.*;
 public class TestOpcode {
 
 	@Test public void testZero() {
-		assertTrue(Opcode.OperandType.get("0OP") == Opcode.OperandType.OT_0OP);
+		assertTrue(Instruction.OperandCount.get("0OP") == Instruction.OperandCount.OC_0OP);
 	}
 	
 	@Test public void testOne() {
-		assertTrue(Opcode.OperandType.get("1OP") == Opcode.OperandType.OT_1OP);
+		assertTrue(Instruction.OperandCount.get("1OP") == Instruction.OperandCount.OC_1OP);
 	}
 	
 	@Test public void testTwo() {
-		assertTrue(Opcode.OperandType.get("2OP") == Opcode.OperandType.OT_2OP);
+		assertTrue(Instruction.OperandCount.get("2OP") == Instruction.OperandCount.OC_2OP);
 	}
 	
 	@Test public void testVar() {
-		assertTrue(Opcode.OperandType.get("VAR") == Opcode.OperandType.OT_VAR);
+		assertTrue(Instruction.OperandCount.get("VAR") == Instruction.OperandCount.OC_VAR);
 	}
 	
 	@Test public void testExt() {
-		assertTrue(Opcode.OperandType.get("EXT") == Opcode.OperandType.OT_EXT);
+		assertTrue(Instruction.OperandCount.get("EXT") == Instruction.OperandCount.OC_EXT);
 	}
 	
 	@Test public void testIllegalType() {
 		try {
-			Opcode.OperandType.get("FOO");
+			Instruction.OperandCount.get("FOO");
 		} catch(IllegalArgumentException e) {
 			return; //success!
 		}
@@ -45,7 +45,7 @@ public class TestOpcode {
 	
 	@Test public void testTypeToString() {
 		for (String x : new String[] { "0OP", "1OP", "2OP", "VAR", "EXT"}) {
-			assertEquals(Opcode.OperandType.get(x).toString(), x);
+			assertEquals(Instruction.OperandCount.get(x).toString(), x);
 		}
 	}
 }
