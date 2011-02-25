@@ -20,8 +20,9 @@ public class TestParser {
 	@Test public void testOne() {
 		try {
 			Parser p = 
-				new Parser(new Lexer(new File("/home/software/Projects/Z-Mechanic/beer.zap")));
+				new Parser(new Lexer(new File("/home/software/Dropbox/Workspaces/experiments/Z-Mechanic/data/test/mini.zap")));
 			p.parse();
+			p.show();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

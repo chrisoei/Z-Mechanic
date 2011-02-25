@@ -23,4 +23,8 @@ public class Label extends ParseElement {
 		String s = t.getStringValue();
 		labelText = s.substring(0, s.length() - 1);
 	}
+	
+	public String toString() {
+		return "Label(" + labelText + ")";
+	}
 }

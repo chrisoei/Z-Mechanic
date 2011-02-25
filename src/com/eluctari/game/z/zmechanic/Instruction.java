@@ -123,6 +123,19 @@ public class Instruction extends ParseElement {
 
 		public void setOperandCount(Instruction.OperandCount oc) {
 			instruction.operandCount = oc;
+			switch(oc) {
+			case OC_0OP:
+				instruction.operandTypes = null;
+				instruction.operands = null;
+				break;
+			case OC_1OP:
+				instruction.operandTypes = new Instruction.OperandType[1];
+				instruction.operands = new Operand[1];
+				break;
+			case OC_2OP:
+				instruction.operandTypes = new Instruction.OperandType[2];
+				instruction.operands = new Operand[2];
+			}
 		}
 
 		public void setOperandType(int n, Instruction.OperandType ot) {
@@ -203,4 +216,7 @@ public class Instruction extends ParseElement {
 		return operandCount;
 	}
 
+	public String toString() {
+		return String.format("INSTRUCTION(%x at ", opcode) + address + ")";
+	}
 }

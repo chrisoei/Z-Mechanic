@@ -45,7 +45,7 @@ public class TestTokenizer {
 						//System.out.println(">");
 						
 					default:
-						System.out.println("Unknown: " + t + " = "+ x.getIntegerValue() + "/" + x.getStringValue());
+//						System.out.println("Unknown: " + t + " = "+ x.getIntegerValue() + "/" + x.getStringValue());
 				}
 			}
 		} catch (IOException e) {

@@ -11,7 +11,7 @@ import java.util.*;
  *
  */
 public class Opcode {
-	byte[] bytes;
+	public byte[] bytes;
 	int nOperands;
 	boolean store;
 	boolean branch;

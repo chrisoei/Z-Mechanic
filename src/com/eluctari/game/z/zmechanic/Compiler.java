@@ -17,23 +17,29 @@ public class Compiler {
 	public void compile() throws IOException {
 		ZMachine.INSTANCE.setVersion(5);
 		storyFile = new ZStoryFile();
-		storyFile.putByte(0, (byte)ZMachine.INSTANCE.getVersion());
+		storyFile.setZMachineVersion();
 		// See p61
-		storyFile.putBit(1, 0, false); // no colors available
-		storyFile.putBit(1, 1, false); // picture display not available
-		storyFile.putBit(1, 2, false); // boldface not available
-		storyFile.putBit(1, 3, false); // italics not available
-		storyFile.putBit(1, 4, true); // fixed-space font available
-		storyFile.putBit(1, 5, false); // sound effects not available
-		storyFile.putBit(1, 6, false); // timed keyboard not available
+		Address flag1 = new Address(1);
+		storyFile.putBit(flag1, 0, false); // no colors available
+		storyFile.putBit(flag1, 1, false); // picture display not available
+		storyFile.putBit(flag1, 2, false); // boldface not available
+		storyFile.putBit(flag1, 3, false); // italics not available
+		storyFile.putBit(flag1, 4, true); // fixed-space font available
+		storyFile.putBit(flag1, 5, false); // sound effects not available
+		storyFile.putBit(flag1, 6, false); // timed keyboard not available
 		
 		storyFile.setSerialCode("110224");
 		storyFile.setReleaseNumber((short)7);
-		storyFile.setAbbreviationsTable(new Address((short)123));
-		storyFile.setBaseOfHighMemory(new Address((short)1234));
-		storyFile.setBaseOfStaticMemory(new Address((short)126));
-		storyFile.setInitialValueOfProgramCounter(new Address((short)12345));
-		storyFile.putByte(12345, (byte)1);
+		assert((short)7 == storyFile.getReleaseNumber());
+		storyFile.setAbbreviationsTable(new Address((short)0x007b));
+		storyFile.setBaseOfHighMemory(new Address((short)0x04d2));
+		storyFile.setBaseOfStaticMemory(new Address((short)0x7e));
+		storyFile.setDictionaryLocation(new Address((short)0x50));
+		storyFile.setGlobalVariablesTable(new Address((short)0x65));
+		storyFile.setObjectTableLocation(new Address((short)0x60));
+		storyFile.setInitialValueOfProgramCounter(new Address((short)0x3039));
+		storyFile.putByte(new Address(0xc0e5), (byte)1);
+		
 		storyFile.setFileLength();
 		storyFile.write(new File("/home/software/compiled.z5"));
 	}

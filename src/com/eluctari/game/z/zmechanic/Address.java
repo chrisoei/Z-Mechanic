@@ -3,41 +3,47 @@
  */
 package com.eluctari.game.z.zmechanic;
 
+import java.io.StringWriter;
+
 /**
+ * This is an immutable (and therefore threadsafe) class.
  * @author Christopher Oei http://www.linkedin.com/in/eluctari
  *
  */
-public class Address {
+public final class Address {
 
-	private int bytePosition; // Remember, Java integers are 32-bits whereas Z-machines are restricted to 16.
-	boolean isSet;
-	
-	public Address() {
-		bytePosition = -1;
-		isSet = false;
-	}
+	private final int bytePosition; // Remember, Java integers are 32-bits whereas Z-machines are restricted to 16.
 	
 	public Address(short x) {
-		setByteAddress(x);
+		bytePosition = 0xFFFF & (int)x; // get rid of sign
 	}
 	
-	public void setByteAddress(short x) {
+	public Address(int x) {
+		assert((x >= 0) && (x < 65536));
 		bytePosition = x;
-		isSet = true;
 	}
 	
-	public short getByteAddress() {
-		assert(isSet);
-		return (short)bytePosition;
+	public Address nextByte() {
+		return new Address(bytePosition + 1);
 	}
 	
-	public short getWordAddress() {
-		assert(isSet);
-		return (short)(bytePosition / 2);
+	public Address nextWord() {
+		return new Address(bytePosition + 2);
 	}
 	
-	public short getPackedRoutineAddress() {
-		assert(isSet);
+	/**
+	 * 
+	 * @return a 32-bit signed integer
+	 */
+	public int getByteAddress() {
+		return bytePosition;
+	}
+	
+	public int getWordAddress() {
+		return (bytePosition / 2);
+	}
+	
+	public int getPackedRoutineAddress() {
 		switch(ZMachine.INSTANCE.getVersion()) {
 		case 1:
 		case 2:
@@ -45,7 +51,7 @@ public class Address {
 		case 4:
 		case 5:
 		case 8:
-			return (short)(bytePosition / 8);
+			return (bytePosition / 8);
 		case 6:
 		case 7:
 			throw new UnsupportedOperationException(); // FIXME for version 6 and 7
@@ -54,8 +60,7 @@ public class Address {
 		}
 	}
 	
-	public short getPackedStringAddress() {
-		assert(isSet);
+	public int getPackedStringAddress() {
 		switch(ZMachine.INSTANCE.getVersion()) {
 		case 1:
 		case 2:
@@ -63,12 +68,16 @@ public class Address {
 		case 4:
 		case 5:
 		case 8:
-			return (short)(bytePosition / 8);
+			return (bytePosition / 8);
 		case 6:
 		case 7:
 			throw new UnsupportedOperationException(); // FIXME for version 6 and 7
 		default:
 			throw new UnknownZMachineVersionException(ZMachine.INSTANCE.getVersion());
 		}
+	}
+	
+	public String toString() {
+		return String.format("%04x", getByteAddress());
 	}
 }

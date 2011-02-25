@@ -10,6 +10,7 @@ package com.eluctari.game.z.zmechanic;
  */
 public class ParseElement {
 	int byteSize;
+	Address address;
 	
 	public ParseElement() {
 		
@@ -25,5 +26,13 @@ public class ParseElement {
 	
 	public void setByteSize(int n) {
 		byteSize = n;
+	}
+	
+	public void setAddress(Address a) {
+		address = a;
+	}
+	
+	public Address getAddress() {
+		return address;
 	}
 }

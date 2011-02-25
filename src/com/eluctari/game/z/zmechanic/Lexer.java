@@ -29,6 +29,7 @@ public class Lexer implements Iterator<ZToken> {
 		streamTokenizer.commentChar(';');
 		streamTokenizer.ordinaryChar('.'); // must do this before calling wordChars for period
 		streamTokenizer.wordChars('.','.');
+		streamTokenizer.wordChars('_', '_');
 		streamTokenizer.wordChars(':',':');
 		streamTokenizer.wordChars('?','?');
 		more = true;

@@ -15,19 +15,32 @@ public class Section extends ParseElement {
 	
 	public enum SectionType {
 		GLOBAL("global"), OBJECT("object"), IMPURE("impure"), VOCAB("vocab"), WORDS("words"), ENDLOD("endlod"), START("start");
+		private String representation;
 		private SectionType(String x) {
+//			System.out.println("adding section:"+x);
+			representation = x;
 			sectionMap.put(x, this);
 		}
+		public String toString() {
+			return representation;
+		}
+	}
+	
+	static {
+		SectionType dummy = SectionType.GLOBAL;
 	}
 	
 	public Section(ZToken t) {
 		String s = t.getStringValue();
-		s = s.substring(2,s.length()-2);
+		s = s.substring(0, s.length()-2);
 		if (!sectionMap.containsKey(s)) {
-			throw new AssertionError("Illegal section" + s);
+			throw new IllegalArgumentException("Illegal section: \"" + s + "\".");
 		} else {
 			sectionType = sectionMap.get(s);
 		}
 	}
 	
+	public String toString() {
+		return "SECTION(" + sectionType.toString() + " = " + address + ")";
+	}
 }

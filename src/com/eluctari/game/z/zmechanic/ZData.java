@@ -30,4 +30,8 @@ public class ZData extends ParseElement {
 	public void setData(int p, byte d) {
 		data[p] = d;
 	}
+	
+	public String toString() {
+		return "DATA(" + getByteSize() + " bytes at " + address.toString() + ")";
+	}
 }
